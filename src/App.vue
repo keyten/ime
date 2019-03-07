@@ -1,28 +1,85 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="app">
+		<CanvasPane
+			v-bind:model="canvasPaneModel"
+			v-bind:zoom="zoomModel.zoom"
+		/>
+
+		<ControlPane
+			v-bind:model="controlPaneModel"
+			v-bind:zoom="zoomModel.zoom"
+			v-on:mousedown="controlPaneMouseDown"
+			v-on:mousemove="controlPaneMouseMove"
+			v-on:mouseup="controlPaneMouseUp"
+		/>
+
+		<LayersPanel
+			v-bind:canvasModel="canvasPaneModel"
+		/>
+
+		<ZoomPanel
+			v-bind:model="zoomModel"
+		/>
+
+		<ToolsPanel
+			v-bind:model="toolsModel"
+		/>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import canvasPaneModel from './models/CanvasPane.js';
+import controlPaneModel from './models/ControlPane.js';
+import toolsModel from './models/Tools.js';
+import zoomModel from './models/Zoom.js';
+
+import CanvasPane from './components/CanvasPane.vue';
+import ControlPane from './components/ControlPane.vue';
+import LayersPanel from './components/LayersPanel.vue';
+import ToolsPanel from './components/ToolsPanel.vue';
+import ZoomPanel from './components/ZoomPanel.vue';
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+	name: 'app',
+
+	components: {
+		CanvasPane,
+		ControlPane,
+		LayersPanel,
+		ToolsPanel,
+		ZoomPanel
+	},
+
+	data: () => ({
+		canvasPaneModel,
+		controlPaneModel,
+		toolsModel,
+		zoomModel
+	}),
+
+	mounted: function(){
+		this.toolsModel.setTool('path');
+	},
+
+	methods: {
+		// this.canvasPaneModel.ctx
+		controlPaneMouseDown: function(e){
+			console.log(e);
+		},
+		controlPaneMouseUp: function(){},
+		controlPaneMouseMove: function(){},
+
+		activateTool: function(){}
+	}
+};
+
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus">
+html, body, *
+	margin 0
+	padding 0
+	border-collapse collapse
+	font-family "Helvetica Neue", Helvetica, Arial, sans-serif
+	font-size 13px
 </style>
