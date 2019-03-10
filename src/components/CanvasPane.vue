@@ -3,7 +3,11 @@
 		<canvas
 			v-bind:width="model.width"
 			v-bind:height="model.height"
-			v-bind:style="{width: styleWidth + 'px', height: styleHeight + 'px'}"
+			v-bind:style="{
+				width: styleWidth + 'px',
+				height: styleHeight + 'px',
+				transform: 'translate(' + offset[0] + 'px, ' + offset[1] + 'px)'
+			}"
 			ref="canvas"
 		></canvas>
 	</div>
@@ -12,14 +16,11 @@
 <script>
 export default {
 	name: 'CanvasPane',
-	props: ['model', 'zoom'],
+	props: ['model', 'zoom', 'offset'],
 
 
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
-
-		var r = this.model.ctx.rect(100, 100, 100, 100, 'red');
-		r.name = 'Rect';
 	},
 
 	computed: {
@@ -46,4 +47,5 @@ export default {
 
 canvas
 	background white
+	image-rendering: crisp-edges
 </style>

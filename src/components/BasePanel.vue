@@ -64,9 +64,9 @@ export default {
 	position absolute
 	background white
 	border solid 1px #eee
-	border-radius 2px
+	border-radius 3px
 	min-width 200px
-	box-shadow 0 0 2px rgba(0, 0, 0, 0.3), 0 4px 4px -2px rgba(0, 0, 0, 0.3), 0 6px 6px -4px rgba(0, 0, 0, 0.3)
+	box-shadow 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 4px -2px rgba(0, 0, 0, 0.3), 0 6px 6px -4px rgba(0, 0, 0, 0.3)
 
 .header
 	font-weight bold

@@ -2,12 +2,12 @@
 	<BasePanel
 		header="Zoom"
 		v-bind:x="initialPanelX"
-		v-bind:y="100"
+		v-bind:y="10"
 	>
 		<div class="container">
 			<input
 				type="range"
-				min="0.1"
+				min="0.5"
 				max="10"
 				step="0.1"
 				v-bind:value="model.zoom"
@@ -27,7 +27,7 @@ export default {
 		BasePanel
 	},
 	computed: {
-		initialPanelX: () => window.innerWidth - 210
+		initialPanelX: () => window.innerWidth - 210 * 2
 	},
 	methods: {
 		onValueChange: function(e){

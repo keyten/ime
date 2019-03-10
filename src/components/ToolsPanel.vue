@@ -6,29 +6,34 @@
 		class="tools_panel"
 	>
 		<div class="inside">
-			<BaseButton
-				text="Path"
-				v-on:click="toolChange('path')"
-			/>
-			<BaseButton
-				text="Brush"
-				v-on:click="toolChange('brush')"
-			/>
+			<div
+				class="tool-button"
+				v-for="tool in tools"
+				v-bind:key="tool"
+				v-bind:class="{active: model.tool === tool}"
+				v-on:click="toolChange(tool)"
+			>
+				{{tool}}
+			</div>
 		</div>
 	</BasePanel>
 </template>
 
 <script>
 import BasePanel from './BasePanel.vue';
-import BaseButton from './BaseButton.vue';
 
 export default {
 	name: 'ToolsPanel',
 	props: ['model'],
+
 	components: {
-		BasePanel,
-		BaseButton
+		BasePanel
 	},
+
+	data: () => ({
+		tools: ['path', 'pointer', 'rect', 'hand']
+	}),
+
 	methods: {
 		toolChange: function(tool){
 			this.model.tool = tool;
@@ -44,10 +49,13 @@ export default {
 </style>
 
 <style lang="stylus" scoped>
-.inside
+.tool-button
 	padding 10px
-	padding-top 0
+	cursor pointer
+	border-top 1px solid #ccc
+	&:first-child
+		border-top 0
+	&.active
+		background #eee
 
-button
-	width 100%
 </style>

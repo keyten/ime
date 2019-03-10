@@ -1663,7 +1663,6 @@ Context.prototype = {
 	},
 
 	updateNow : function(){
-		console.time('drawing');
 		var ctx = this.context;
 		ctx.save();
 		// todo: check out what way to clear canvas is faster
@@ -1686,7 +1685,6 @@ Context.prototype = {
 
 		ctx.restore();
 		this._willUpdate = false;
-		console.timeEnd('drawing');
 	},
 
 	getObjectInPoint : function(x, y, mouse){

@@ -12,20 +12,31 @@
 <script>
 export default {
 	name: 'ControlPane',
-	props: ['model', 'zoom'],
+	props: ['model', 'zoom', 'offset'],
 
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
-
+/*
 		var cnv = document.querySelector('.pane canvas');
 		var bounds = cnv.getBoundingClientRect();
-		this.control = this.model.ctx.circle({
+		var control = this.model.ctx.circle({
 			cx: bounds.x + 100,
 			cy: bounds.y + 100,
 			radius: 4,
 			fill: '#0284a8',
 			stroke: '10px #0284a8 0.2'
 		});
+		control.originalX = 100;
+		control.originalY = 100;
+
+		control.rezoom = function(bounds, zoom){
+			this.attr({
+				cx: bounds.x + control.originalX * zoom,
+				cy: bounds.y + control.originalY * zoom
+			});
+		};
+
+		this.model.controls.push(control); */
 	},
 
 	computed: {
@@ -38,16 +49,24 @@ export default {
 		}
 	},
 
-	watch: {
-		zoom: function(newVal, oldVal){
+	methods: {
+		rezoom: function(zoom){
 			var cnv = document.querySelector('.pane canvas');
 			var bounds = cnv.getBoundingClientRect();
 
-			var c = this.control;
-			var cx = bounds.x + 100 * this.zoom;
-			var cy = bounds.y + 100 * this.zoom;
+			this.model.controls.forEach(control => {
+				control.rezoom(bounds, zoom);
+			});
+		}
+	},
 
-			c.attr({cx, cy});
+	watch: {
+		zoom: function(newVal, oldVal){
+			this.rezoom(newVal);
+		},
+
+		offset: function(newVal, oldVal){
+			this.rezoom(this.zoom);
 		}
 	}
 };

@@ -9,6 +9,7 @@
 				v-for="elem in elements"
 				v-bind:element="elem"
 				v-bind:key="elem.name"
+				v-bind:canvasModel="canvasModel"
 			/>
 		</div>
 	</BasePanel>

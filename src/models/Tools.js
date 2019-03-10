@@ -3,13 +3,36 @@ import canvasPaneModel from './CanvasPane.js';
 import controlPaneModel from './ControlPane.js';
 
 export default {
-	tool: 'path',
+	toolModel: null,
 
-	setTool: function(tool){
-		this.tool = tool;
-		tools[this.tool].init(
+	_tool: null,
+	get tool() {
+		return this._tool;
+	},
+
+	set tool(val){
+		if(this.toolModel){
+			this.toolModel.destroy(
+				canvasPaneModel,
+				controlPaneModel
+			);
+		}
+
+		this._tool = val;
+		this.toolModel = tools[val];
+		this.toolModel.init(
 			canvasPaneModel,
 			controlPaneModel
 		);
+	},
+
+	mousedown: function(e){
+		this.toolModel.mousedown(e, canvasPaneModel, controlPaneModel);
+	},
+	mouseup: function(e){
+		this.toolModel.mouseup(e, canvasPaneModel, controlPaneModel);
+	},
+	mousemove: function(e){
+		this.toolModel.mousemove(e, canvasPaneModel, controlPaneModel);
 	}
 };

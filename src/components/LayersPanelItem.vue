@@ -1,5 +1,8 @@
 <template>
-	<div class="item">
+	<div
+		class="item"
+		v-bind:class="{active: canvasModel.activeElement === element}"
+	>
 		{{'Name: ' + element.name}}
 	</div>
 </template>
@@ -8,7 +11,7 @@
 export default {
 	name: 'LayersPanelItem',
 
-	props: ['element']
+	props: ['element', 'canvasModel']
 };
 </script>
 
@@ -16,6 +19,8 @@ export default {
 .item
 	padding 15px
 	cursor pointer
-	&:active, &.active
+	&:active
 		background #eee
+	&.active
+		background #ddd
 </style>

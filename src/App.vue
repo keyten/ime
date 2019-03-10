@@ -2,15 +2,15 @@
 	<div id="app">
 		<CanvasPane
 			v-bind:model="canvasPaneModel"
-			v-bind:zoom="zoomModel.zoom"
+			v-bind:zoom="zoomOffsetModel.zoom"
+			v-bind:offset="zoomOffsetModel.offset"
 		/>
 
 		<ControlPane
 			v-bind:model="controlPaneModel"
-			v-bind:zoom="zoomModel.zoom"
+			v-bind:zoom="zoomOffsetModel.zoom"
+			v-bind:offset="zoomOffsetModel.offset"
 			v-on:mousedown="controlPaneMouseDown"
-			v-on:mousemove="controlPaneMouseMove"
-			v-on:mouseup="controlPaneMouseUp"
 		/>
 
 		<LayersPanel
@@ -18,7 +18,7 @@
 		/>
 
 		<ZoomPanel
-			v-bind:model="zoomModel"
+			v-bind:model="zoomOffsetModel"
 		/>
 
 		<ToolsPanel
@@ -31,7 +31,7 @@
 import canvasPaneModel from './models/CanvasPane.js';
 import controlPaneModel from './models/ControlPane.js';
 import toolsModel from './models/Tools.js';
-import zoomModel from './models/Zoom.js';
+import zoomOffsetModel from './models/ZoomOffset.js';
 
 import CanvasPane from './components/CanvasPane.vue';
 import ControlPane from './components/ControlPane.vue';
@@ -54,20 +54,26 @@ export default {
 		canvasPaneModel,
 		controlPaneModel,
 		toolsModel,
-		zoomModel
+		zoomOffsetModel
 	}),
 
 	mounted: function(){
-		this.toolsModel.setTool('path');
+		this.toolsModel.tool = 'rect';
+
+		window.addEventListener('mouseup', this.windowMouseUp);
+		window.addEventListener('mousemove', this.windowMouseMove);
 	},
 
 	methods: {
-		// this.canvasPaneModel.ctx
 		controlPaneMouseDown: function(e){
-			console.log(e);
+			this.toolsModel.mousedown(e);
 		},
-		controlPaneMouseUp: function(){},
-		controlPaneMouseMove: function(){},
+		windowMouseUp: function(e){
+			this.toolsModel.mouseup(e);
+		},
+		windowMouseMove: function(e){
+			this.toolsModel.mousemove(e);
+		},
 
 		activateTool: function(){}
 	}

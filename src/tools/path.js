@@ -6,9 +6,9 @@ export default {
 	init: function(canvasModel, controlModel){},
 	destroy: function(canvasModel, controlModel){},
 
-	mousedown: function(canvasModel, controlModel){},
-	mouseup: function(canvasModel, controlModel){},
-	mousemove: function(canvasModel, controlModel){},
+	mousedown: function(e, canvasModel, controlModel){},
+	mouseup: function(e, canvasModel, controlModel){},
+	mousemove: function(e, canvasModel, controlModel){},
 
 	state: states.initial,
 
