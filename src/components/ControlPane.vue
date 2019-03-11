@@ -16,27 +16,6 @@ export default {
 
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
-/*
-		var cnv = document.querySelector('.pane canvas');
-		var bounds = cnv.getBoundingClientRect();
-		var control = this.model.ctx.circle({
-			cx: bounds.x + 100,
-			cy: bounds.y + 100,
-			radius: 4,
-			fill: '#0284a8',
-			stroke: '10px #0284a8 0.2'
-		});
-		control.originalX = 100;
-		control.originalY = 100;
-
-		control.rezoom = function(bounds, zoom){
-			this.attr({
-				cx: bounds.x + control.originalX * zoom,
-				cy: bounds.y + control.originalY * zoom
-			});
-		};
-
-		this.model.controls.push(control); */
 	},
 
 	computed: {

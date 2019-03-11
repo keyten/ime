@@ -105,26 +105,26 @@ export function rectWithBullets(attrs, canvasModel, controlModel){
 	}
 
 	outline.attrHooks = {
-			x1: {set: function(v){
-				outline.lt.attrs.x = v;
-				outline.lb.attrs.x = v;
-				outline.rezoom();
-			}},
-			y1: {set: function(v){
-				outline.lt.attrs.y = v;
-				outline.rt.attrs.y = v;
-				outline.rezoom();
-			}},
-			x2: {set: function(v){
-				outline.rt.attrs.x = v;
-				outline.rb.attrs.x = v;
-				outline.rezoom();
-			}},
-			y2: {set: function(v){
-				outline.lb.attrs.y = v;
-				outline.rb.attrs.y = v;
-				outline.rezoom();
-			}}
+		x1: {set: function(v){
+			outline.lt.attrs.x = v;
+			outline.lb.attrs.x = v;
+			outline.rezoom();
+		}},
+		y1: {set: function(v){
+			outline.lt.attrs.y = v;
+			outline.rt.attrs.y = v;
+			outline.rezoom();
+		}},
+		x2: {set: function(v){
+			outline.rt.attrs.x = v;
+			outline.rb.attrs.x = v;
+			outline.rezoom();
+		}},
+		y2: {set: function(v){
+			outline.lb.attrs.y = v;
+			outline.rb.attrs.y = v;
+			outline.rezoom();
+		}}
 	};
 
 	outline.destroy = function(){

@@ -21,9 +21,20 @@
 			v-bind:model="zoomOffsetModel"
 		/>
 
+		<PropsPanel
+			v-bind:model="canvasPaneModel"
+		/>
+
 		<ToolsPanel
 			v-bind:model="toolsModel"
+			v-bind:canvasModel="canvasPaneModel"
 		/>
+
+		<ScriptPanel
+			v-bind:model="canvasPaneModel"
+		/>
+
+		<portal-target name="window"></portal-target>
 	</div>
 </template>
 
@@ -38,6 +49,8 @@ import ControlPane from './components/ControlPane.vue';
 import LayersPanel from './components/LayersPanel.vue';
 import ToolsPanel from './components/ToolsPanel.vue';
 import ZoomPanel from './components/ZoomPanel.vue';
+import PropsPanel from './components/PropsPanel.vue';
+import ScriptPanel from './components/ScriptPanel.vue';
 
 export default {
 	name: 'app',
@@ -47,7 +60,9 @@ export default {
 		ControlPane,
 		LayersPanel,
 		ToolsPanel,
-		ZoomPanel
+		ZoomPanel,
+		PropsPanel,
+		ScriptPanel
 	},
 
 	data: () => ({

@@ -16,22 +16,32 @@
 				{{tool}}
 			</div>
 		</div>
+
+		<!-- For save dialog -->
+		<div class="save-btn" v-on:click="saveVisible = true">Save</div>
+		<ExportWindow
+			v-bind:visible="saveVisible"
+			v-bind:model="canvasModel"
+			v-on:close="saveVisible = false"
+		/>
 	</BasePanel>
 </template>
 
 <script>
 import BasePanel from './BasePanel.vue';
+import ExportWindow from './ExportWindow.vue';
 
 export default {
 	name: 'ToolsPanel',
-	props: ['model'],
+	props: ['model', 'canvasModel'],
 
 	components: {
-		BasePanel
+		BasePanel, ExportWindow
 	},
 
 	data: () => ({
-		tools: ['path', 'pointer', 'rect', 'hand']
+		tools: ['path', 'pointer', 'rect', 'hand'],
+		saveVisible: false
 	}),
 
 	methods: {
@@ -57,5 +67,11 @@ export default {
 		border-top 0
 	&.active
 		background #eee
+
+.save-btn
+	padding 10px
+	background #f5f5f5
+	border-top 1px solid #aaa
+	cursor pointer
 
 </style>

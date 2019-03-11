@@ -47,5 +47,5 @@ export default {
 
 canvas
 	background white
-	image-rendering: crisp-edges
+	image-rendering pixelated
 </style>

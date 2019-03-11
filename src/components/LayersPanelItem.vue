@@ -2,6 +2,7 @@
 	<div
 		class="item"
 		v-bind:class="{active: canvasModel.activeElement === element}"
+		v-on:click="elemClick"
 	>
 		{{'Name: ' + element.name}}
 	</div>
@@ -11,7 +12,13 @@
 export default {
 	name: 'LayersPanelItem',
 
-	props: ['element', 'canvasModel']
+	props: ['element', 'canvasModel'],
+
+	methods: {
+		elemClick: function(){
+			this.canvasModel.activeElement = this.element;
+		}
+	}
 };
 </script>
 

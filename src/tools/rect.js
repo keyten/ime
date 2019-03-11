@@ -4,23 +4,12 @@ import {rectWithBullets} from './controls.js';
 
 export default {
 	init: function(canvasModel, controlModel){},
-	destroy: function(canvasModel, controlModel){
-		if(this.outline){
-			this.outline.destroy();
-			this.outline = null;
-		}
-		canvasModel.activeElement = null;
-	},
+	destroy: function(canvasModel, controlModel){},
 
 	down: false,
 	object: null,
-	outline: null,
 
 	mousedown: function(e, canvasModel, controlModel){
-		if(this.outline){
-			this.outline.destroy();
-		}
-
 		var [x, y] = screenToCanvas(e.clientX, e.clientY, canvasModel);
 		this.object = canvasModel.ctx.rect({
 			x, y,
@@ -28,17 +17,23 @@ export default {
 			height: 0,
 			fill: canvasModel.fcolor
 		});
+
+		this.object.uid = uid();
 		this.object.name = uid().substr(8, 4);
+		this.object.createSelection = function(){
+			var [x1, y1, x2, y2] = this.attr(['x1', 'y1', 'x2', 'y2'])
+			this.outline = rectWithBullets({x1, y1, x2, y2}, canvasModel, controlModel);
+			controlModel.controls.push(this.outline);
+		};
+		this.object.removeSelection = function(){
+			var index = controlModel.controls.indexOf(this.outline);
+			if(index !== -1){
+				controlModel.controls.splice(index, 1);
+			}
+			this.outline.destroy();
+		};
+
 		canvasModel.activeElement = this.object;
-
-		this.outline = rectWithBullets({
-			x1: x,
-			y1: y,
-			x2: x,
-			y2: y
-		}, canvasModel, controlModel);
-		controlModel.controls.push(this.outline);
-
 		this.down = true;
 	},
 
@@ -58,7 +53,7 @@ export default {
 			y2: y
 		});
 
-		this.outline.attr({
+		this.object.outline.attr({
 			x2: x,
 			y2: y
 		});
