@@ -13,26 +13,61 @@
 			v-on:mousedown="controlPaneMouseDown"
 		/>
 
-		<LayersPanel
-			v-bind:canvasModel="canvasPaneModel"
-		/>
+		<UiPane />
 
-		<ZoomPanel
-			v-bind:model="zoomOffsetModel"
-		/>
+		<!-- тут нужен uiPane -->
+		<!-- <BasePanel
+			header="Layers"
+			v-bind:x="viewWidth - 210"
+			v-bind:y="10"
+		>
+			<LayersPanel
+				v-bind:canvasModel="canvasPaneModel"
+			/>
+		</BasePanel>
 
-		<PropsPanel
-			v-bind:model="canvasPaneModel"
-		/>
+		<BasePanel
+			header="Zoom"
+			v-bind:x="viewWidth - 210 * 2"
+			v-bind:y="10"
+		>
+			<ZoomPanel
+				v-bind:model="zoomOffsetModel"
+			/>
+		</BasePanel>
 
-		<ToolsPanel
-			v-bind:model="toolsModel"
-			v-bind:canvasModel="canvasPaneModel"
-		/>
+		<BasePanel
+			header="Properties"
+			v-bind:x="viewWidth - 210 * 2"
+			v-bind:y="110"
+		>
+			<PropsPanel
+				v-bind:model="canvasPaneModel"
+			/>
+		</BasePanel>
 
-		<ScriptPanel
-			v-bind:model="canvasPaneModel"
-		/>
+		<BasePanel
+			header="Tools"
+			v-bind:x="10"
+			v-bind:y="10"
+			class="tools_panel"
+		>
+			<ToolsPanel
+				v-bind:model="toolsModel"
+				v-bind:canvasModel="canvasPaneModel"
+			/>
+		</BasePanel>
+
+		<BasePanel
+			header="Script"
+			v-bind:x="10"
+			v-bind:y="viewHeight - 210"
+			class="script-panel"
+		>
+			<ScriptPanel
+				v-bind:model="canvasPaneModel"
+			/>
+		</BasePanel> -->
 
 		<portal-target name="window"></portal-target>
 	</div>
@@ -46,11 +81,14 @@ import zoomOffsetModel from './models/ZoomOffset.js';
 
 import CanvasPane from './components/CanvasPane.vue';
 import ControlPane from './components/ControlPane.vue';
+
+import UiPane from './components/UiPane.vue';
+/* import BasePanel from './components/BasePanel.vue';
 import LayersPanel from './components/LayersPanel.vue';
 import ToolsPanel from './components/ToolsPanel.vue';
 import ZoomPanel from './components/ZoomPanel.vue';
 import PropsPanel from './components/PropsPanel.vue';
-import ScriptPanel from './components/ScriptPanel.vue';
+import ScriptPanel from './components/ScriptPanel.vue'; */
 
 export default {
 	name: 'app',
@@ -58,11 +96,8 @@ export default {
 	components: {
 		CanvasPane,
 		ControlPane,
-		LayersPanel,
-		ToolsPanel,
-		ZoomPanel,
-		PropsPanel,
-		ScriptPanel
+
+		UiPane
 	},
 
 	data: () => ({
@@ -73,10 +108,11 @@ export default {
 	}),
 
 	mounted: function(){
-		this.toolsModel.tool = 'rect';
+		this.toolsModel.tool = 'path';
 
 		window.addEventListener('mouseup', this.windowMouseUp);
 		window.addEventListener('mousemove', this.windowMouseMove);
+		window.addEventListener('keydown', this.windowKeyDown);
 	},
 
 	methods: {
@@ -89,8 +125,16 @@ export default {
 		windowMouseMove: function(e){
 			this.toolsModel.mousemove(e);
 		},
+		windowKeyDown: function(e){
+			this.toolsModel.keydown(e);
+		},
 
 		activateTool: function(){}
+	},
+
+	computed: {
+		viewWidth: () => window.innerWidth,
+		viewHeight: () => window.innerHeight
 	}
 };
 

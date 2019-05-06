@@ -1,6 +1,6 @@
 import {screenToCanvas} from '../lib/coords.js';
-import uid from '../lib/uid.js';
-import {rectWithBullets} from './controls.js';
+import imeProperties from './imeProperties';
+import RectSelection from './selection/rect';
 
 export default {
 	init: function(canvasModel, controlModel){},
@@ -15,23 +15,13 @@ export default {
 			x, y,
 			width: 0,
 			height: 0,
-			fill: canvasModel.fcolor
+			...canvasModel.elementStyle
 		});
 
-		this.object.uid = uid();
-		this.object.name = uid().substr(8, 4);
-		this.object.createSelection = function(){
-			var [x1, y1, x2, y2] = this.attr(['x1', 'y1', 'x2', 'y2'])
-			this.outline = rectWithBullets({x1, y1, x2, y2}, canvasModel, controlModel);
-			controlModel.controls.push(this.outline);
-		};
-		this.object.removeSelection = function(){
-			var index = controlModel.controls.indexOf(this.outline);
-			if(index !== -1){
-				controlModel.controls.splice(index, 1);
-			}
-			this.outline.destroy();
-		};
+		this.object.attr('imeProperties', imeProperties({
+			name: 'Rect',
+			selectionModel: new RectSelection(this.object, canvasModel, controlModel)
+		}));
 
 		canvasModel.activeElement = this.object;
 		this.down = true;
@@ -53,7 +43,7 @@ export default {
 			y2: y
 		});
 
-		this.object.outline.attr({
+		this.object.attr('imeProperties').selectionModel.update({
 			x2: x,
 			y2: y
 		});

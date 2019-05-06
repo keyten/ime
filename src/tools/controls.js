@@ -2,8 +2,41 @@ import {screenToCanvas} from '../lib/coords.js';
 import controlStyle from '../lib/controlStyle.js';
 import zoomOffsetModel from '../models/ZoomOffset.js';
 
+function drawBullet(ctx, x, y){
+	ctx.save();
+	ctx.beginPath();
+	ctx.fillStyle = controlStyle.bulletFill;
+	ctx.strokeStyle = controlStyle.bulletStrokeColor;
+	ctx.lineWidth = controlStyle.bulletStrokeWidth;
+	ctx.moveTo(x, y);
+	ctx.arc(x, y, controlStyle.bulletRadius, 0, Math.PI * 2);
+	ctx.fill();
+	ctx.stroke();
+	ctx.restore();
+}
+
+function drawRectOutline(ctx, x, y, w, h){
+	ctx.save();
+	ctx.strokeStyle = controlStyle.outlineColor;
+	ctx.lineWidth = 1;
+	ctx.strokeRect(x, y, w, h);
+	ctx.restore();
+}
+
+function drawLine(ctx, x1, y1, x2, y2){
+	ctx.save();
+	ctx.strokeStyle = controlStyle.outlineColor;
+	ctx.lineWidth = 1;
+	ctx.beginPath();
+	ctx.moveTo(x1, y1);
+	ctx.lineTo(x2, y2);
+	ctx.stroke();
+	ctx.restore();
+}
+
 export function bullet(attrs, canvasModel, controlModel){
 	return controlModel.ctx.object({
+		type: 'bullet',
 		draw: function(ctx){
 			var bounds = canvasModel.ctx.canvas.getBoundingClientRect();
 			var zoom = zoomOffsetModel.zoom;
@@ -136,4 +169,47 @@ export function rectWithBullets(attrs, canvasModel, controlModel){
 	};
 
 	return outline;
+};
+
+export function mirrorBulletLine(attrs, canvasModel, controlModel){
+	return controlModel.ctx.object({
+		type: 'mirrorBullet',
+		draw: function(ctx){
+			var bounds = canvasModel.ctx.canvas.getBoundingClientRect();
+			var zoom = zoomOffsetModel.zoom;
+			var {x, y, cx, cy} = this.attrs;
+
+			x = bounds.x + x * zoom;
+			y = bounds.y + y * zoom;
+			cx = bounds.x + cx * zoom;
+			cy = bounds.y + cy * zoom;
+
+			var mx = 2 * cx - x,
+				my = 2 * cy - y;
+
+			drawLine(ctx, mx, my, x, y);
+			drawBullet(ctx, x, y);
+			drawBullet(ctx, cx, cy);
+			drawBullet(ctx, mx, my);
+		},
+
+
+		attrs,
+		attrHooks: {
+			x: {set: function(){ this.update(); }},
+			y: {set: function(){ this.update(); }},
+			cx: {set: function(){ this.update(); }},
+			cy: {set: function(){ this.update(); }},
+			mx: {get: function(){ return this.attrs.cx * 2 - this.attrs.x; }},
+			my: {get: function(){ return this.attrs.cy * 2 - this.attrs.y; }}
+		},
+
+		destroy: function(){
+			this.remove();
+		},
+
+		rezoom: function(){
+			this.update();
+		}
+	});
 };

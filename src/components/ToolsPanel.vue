@@ -1,11 +1,6 @@
 <template>
-	<BasePanel
-		header="Tools"
-		v-bind:x="10"
-		v-bind:y="10"
-		class="tools_panel"
-	>
-		<div class="inside">
+	<div class="container">
+		<!-- <div class="inside">
 			<div
 				class="tool-button"
 				v-for="tool in tools"
@@ -18,17 +13,36 @@
 		</div>
 
 		<!-- For save dialog -->
-		<div class="save-btn" v-on:click="saveVisible = true">Save</div>
-		<ExportWindow
-			v-bind:visible="saveVisible"
-			v-bind:model="canvasModel"
-			v-on:close="saveVisible = false"
-		/>
-	</BasePanel>
+		<!-- <div class="right-buttons">
+			<div class="save-btn" v-on:click="saveVisible = true">Save</div>
+			<ExportWindow
+				v-bind:visible="saveVisible"
+				v-bind:model="canvasModel"
+				v-on:close="saveVisible = false"
+			/>
+		</div> -->
+		<div class="panelle">
+			<div
+				class="tool-button"
+				v-for="tool in tools"
+				v-bind:key="tool"
+				v-bind:class="{active: model.tool === tool}"
+				v-on:click="toolChange(tool)"
+			>
+				{{tool}}
+			</div>
+		</div>
+
+		<div class="color-container">
+			<div class="swap-colors" v-on:click="changeColors" />
+			<div class="default-colors" v-on:click="resetColors" />
+			<div class="bg-color" v-bind:style="{background: canvasModel.bcolor}" />
+			<div class="fg-color" v-bind:style="{background: canvasModel.fcolor}" />
+		</div>
+	</div>
 </template>
 
 <script>
-import BasePanel from './BasePanel.vue';
 import ExportWindow from './ExportWindow.vue';
 
 export default {
@@ -36,7 +50,7 @@ export default {
 	props: ['model', 'canvasModel'],
 
 	components: {
-		BasePanel, ExportWindow
+		ExportWindow
 	},
 
 	data: () => ({
@@ -47,31 +61,106 @@ export default {
 	methods: {
 		toolChange: function(tool){
 			this.model.tool = tool;
+		},
+
+		changeColors: function(){
+			var {fcolor, bcolor} = this.canvasModel;
+			this.canvasModel.fcolor = bcolor;
+			this.canvasModel.bcolor = fcolor;
+		},
+
+		resetColors: function(){
+			this.canvasModel.fcolor = '#ffffff';
+			this.canvasModel.bcolor = '#000000';
 		}
 	}
 };
 </script>
 
-<style lang="stylus">
-.tools_panel
-	width 100px !important
-	min-width 0 !important
-</style>
-
 <style lang="stylus" scoped>
-.tool-button
-	padding 10px
+.panelle
+	box-shadow 0 2px 2px rgba(0, 0, 0, 0.1)
+	border-top-right-radius 5px
+	border-bottom-right-radius 5px
+	.tool-button
+		background linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5))
+		display block
+		width 46px
+		height 40px
+		cursor pointer
+		overflow hidden
+		border-top solid 1px #eee
+		display flex
+		align-items center
+		padding-left 10px
+		box-sizing border-box
+		&:first-child
+			border-top 0
+			border-top-right-radius 5px
+		&:last-child
+			border-bottom-right-radius 5px
+		&.active, &:active
+			background #aaa
+			box-shadow inset 0 3px 3px rgba(0, 0, 0, 0.3), 0 1px white
+			border-color #777
+
+.tool-button.active + .tool-button,
+.tool-button:active + .tool-button
+	border-color #777
+
+.bg-color, .fg-color
+	width 30px
+	height 30px
+	box-shadow 0 0 2px gray, 0 1px 1px gray
 	cursor pointer
-	border-top 1px solid #ccc
-	&:first-child
-		border-top 0
+
+.fg-color
+	margin-top -45px
+
+.bg-color
+	margin-top 30px
+	margin-left 15px
+
+.swap-colors, .default-colors
+	background rgba(0, 0, 0, 0.2)
+	width 10px
+	height 10px
+	position absolute
+	transition background 1s
+	cursor pointer
+	&:hover
+		background rgba(0, 0, 0, 0.4)
+
+.swap-colors
+	border-top-right-radius 8px
+	margin-left 35px
+	margin-top -15px
+
+.default-colors
+	margin-top 20px
+	border-bottom-left-radius 8px
+
+/*  .container
+	display grid
+	grid-template-columns auto auto
+
+.right-buttons
+	text-align right
+
+.tool-button
+	padding 12px 20px
+	padding-bottom 13px
+	cursor pointer
+	display inline-block
 	&.active
 		background #eee
 
 .save-btn
-	padding 10px
-	background #f5f5f5
-	border-top 1px solid #aaa
+	padding 12px 20px
+	padding-bottom 13px
 	cursor pointer
-
+	display inline-block
+	&:hover
+		background #eee
+	border-bottom-right-radius 8px */
 </style>

@@ -51,8 +51,8 @@ export default {
 };
 </script>
 
-<style scoped>
-canvas {
-	position: absolute;
-}
+<style scoped lang="stylus">
+canvas
+	position absolute
+	image-rendering pixelated
 </style>

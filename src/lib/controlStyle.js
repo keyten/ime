@@ -1,7 +1,7 @@
 export default {
-	bulletFill: '#0284a8',
-	bulletStrokeColor: 'rgba(2, 132, 138, 0.2)',
-	bulletStrokeWidth: 10,
-	bulletRadius: 4,
+	bulletFill: 'white',
+	bulletStrokeColor: '#0284a8',
+	bulletStrokeWidth: 1,
+	bulletRadius: 5,
 	outlineColor: '#0284a8'
 };

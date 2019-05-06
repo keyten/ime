@@ -22,6 +22,7 @@ export default {
 	border-radius 4px
 	cursor pointer
 	color black !important
+	outline 0
 	&:hover
 		border-color #888
 	&:active

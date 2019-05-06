@@ -4,7 +4,7 @@
 		v-bind:class="{active: canvasModel.activeElement === element}"
 		v-on:click="elemClick"
 	>
-		{{'Name: ' + element.name}}
+		{{element.name}}
 	</div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
 
 <style scoped lang="stylus">
 .item
-	padding 15px
+	padding 15px 20px
 	cursor pointer
 	&:active
 		background #eee

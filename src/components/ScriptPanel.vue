@@ -1,10 +1,5 @@
 <template>
-	<BasePanel
-		header="Script"
-		v-bind:x="initialPanelX"
-		v-bind:y="initialPaneY"
-		class="script-panel"
-	>
+	<div class="container">
 		<div
 			class="code"
 			v-if="element"
@@ -22,18 +17,13 @@
 		>
 			Choose the element
 		</div>
-	</BasePanel>
+	</div>
 </template>
 
 <script>
-import BasePanel from './BasePanel.vue';
-
 export default {
 	name: 'ScriptPanel',
 	props: ['model'],
-	components: {
-		BasePanel
-	},
 	computed: {
 		initialPanelX: () => 10,
 		initialPaneY: () => window.innerHeight - 210,

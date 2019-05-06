@@ -1,37 +1,27 @@
 <template>
-	<BasePanel
-		header="Zoom"
-		v-bind:x="initialPanelX"
-		v-bind:y="10"
-	>
-		<div class="container">
-			<input
-				type="range"
-				min="0.5"
-				max="10"
-				step="0.1"
-				v-bind:value="model.zoom"
-				v-on:input="onValueChange"
-			/>
-		</div>
-	</BasePanel>
+	<div class="container">
+		<BaseRange
+			v-bind:min="0.5"
+			v-bind:max="10"
+			v-bind:step="0.01"
+			v-bind:value="model.zoom"
+			v-on:change="onValueChange"
+		/>
+	</div>
 </template>
 
 <script>
-import BasePanel from './BasePanel.vue';
+import BaseRange from './BaseRange.vue';
 
 export default {
 	name: 'ZoomPanel',
-	props: ['model'],
 	components: {
-		BasePanel
+		BaseRange
 	},
-	computed: {
-		initialPanelX: () => window.innerWidth - 210 * 2
-	},
+	props: ['model'],
 	methods: {
-		onValueChange: function(e){
-			this.model.zoom = Number(e.target.value);
+		onValueChange: function(value){
+			this.model.zoom = +value.toFixed(2);
 		}
 	}
 };

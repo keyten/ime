@@ -1,9 +1,5 @@
 <template>
-	<BasePanel
-		header="Properties"
-		v-bind:x="initialPanelX"
-		v-bind:y="110"
-	>
+	<div class="container">
 		<div
 			class="list"
 			v-if="element"
@@ -43,21 +39,14 @@
 		>
 			Choose the element
 		</div>
-	</BasePanel>
+	</div>
 </template>
 
 <script>
-import BasePanel from './BasePanel.vue';
-
 export default {
 	name: 'PropsPanel',
 	props: ['model'],
-	components: {
-		BasePanel
-	},
 	computed: {
-		initialPanelX: () => window.innerWidth - 210 * 2,
-
 		element: function(){
 			return this.model.activeElement;
 		},

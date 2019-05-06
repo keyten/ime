@@ -34,5 +34,10 @@ export default {
 	},
 	mousemove: function(e){
 		this.toolModel.mousemove(e, canvasPaneModel, controlPaneModel);
+	},
+	keydown: function(e){
+		if(this.toolModel.keydown){
+			this.toolModel.keydown(e, canvasPaneModel, controlPaneModel);
+		}
 	}
 };
