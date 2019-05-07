@@ -4,7 +4,7 @@
 		v-bind:class="{active: canvasModel.activeElement === element}"
 		v-on:click="elemClick"
 	>
-		{{element.name}}
+		{{elemName}}
 	</div>
 </template>
 
@@ -13,6 +13,12 @@ export default {
 	name: 'LayersPanelItem',
 
 	props: ['element', 'canvasModel'],
+
+	computed: {
+		elemName: function(){
+			return this.element.attr('imeProperties').name || 'Noname';
+		}
+	},
 
 	methods: {
 		elemClick: function(){
@@ -27,7 +33,7 @@ export default {
 	padding 15px 20px
 	cursor pointer
 	&:active
-		background #eee
+		background rgba(0, 0, 0, 0.1)
 	&.active
-		background #ddd
+		background rgba(0, 0, 0, 0.2)
 </style>

@@ -30,6 +30,16 @@
 				v-bind:canvasModel="canvasPaneModel"
 			/>
 		</div>
+
+		<BasePanel
+			header="Layers"
+			v-bind:x="viewWidth - 210"
+			v-bind:y="10"
+		>
+			<LayersPanel
+				v-bind:canvasModel="canvasPaneModel"
+			/>
+		</BasePanel>
 	</div>
 </template>
 
@@ -39,6 +49,7 @@ import controlPaneModel from '../models/ControlPane.js';
 import toolsModel from '../models/Tools.js';
 import zoomOffsetModel from '../models/ZoomOffset.js';
 
+import BasePanel from './BasePanel.vue';
 import LayersPanel from './LayersPanel.vue';
 import ToolsPanel from './ToolsPanel.vue';
 import ZoomPanel from './ZoomPanel.vue';
@@ -49,6 +60,8 @@ export default {
 	name: 'UiPane',
 
 	components: {
+		BasePanel,
+
 		LayersPanel,
 		ToolsPanel,
 		ZoomPanel,
@@ -61,7 +74,12 @@ export default {
 		controlPaneModel,
 		toolsModel,
 		zoomOffsetModel
-	})
+	}),
+
+	computed: {
+		viewWidth: () => window.innerWidth,
+		viewHeight: () => window.innerHeight
+	}
 };
 </script>
 
@@ -73,7 +91,9 @@ export default {
 	position absolute
 	pointer-events none
 
-.left, .right, .tools
+//.left, .right, .tools
+
+.ui-pane > *
 	pointer-events all
 
 .left

@@ -47,7 +47,7 @@ export default {
 	position absolute
 	width 100vw
 	height 100vh
-	background #eee
+	background #fafafa
 	display flex
 	justify-content center
 	align-items center
@@ -55,4 +55,5 @@ export default {
 canvas
 	background white
 	image-rendering pixelated
+	box-shadow 0 0 3px rgba(0, 0, 0, 0.1);
 </style>

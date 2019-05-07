@@ -62,8 +62,8 @@ export default {
 <style scoped lang="stylus">
 .panel
 	position absolute
-	background white
-	border solid 1px #eee
+	background rgba(240, 240, 240, 0.7)
+	border solid 1px rgba(255, 255, 255, 0.5)
 	border-radius 3px
 	min-width 200px
 	box-shadow 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 4px -2px rgba(0, 0, 0, 0.3), 0 6px 6px -4px rgba(0, 0, 0, 0.3)
