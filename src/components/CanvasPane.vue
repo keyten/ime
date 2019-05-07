@@ -1,8 +1,8 @@
 <template>
 	<div class="pane">
 		<canvas
-			v-bind:width="model.width"
-			v-bind:height="model.height"
+			v-bind:width="model.width * dpi"
+			v-bind:height="model.height * dpi"
 			v-bind:style="{
 				width: styleWidth + 'px',
 				height: styleHeight + 'px',
@@ -18,9 +18,12 @@ export default {
 	name: 'CanvasPane',
 	props: ['model', 'zoom', 'offset'],
 
-
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
+		this.model.ctx.attr({
+			scale: this.dpi,
+			pivot: 'lt'
+		});
 	},
 
 	computed: {
@@ -30,6 +33,10 @@ export default {
 
 		styleHeight: function(){
 			return this.model.height * this.zoom;
+		},
+
+		dpi: function(){
+			return window.devicePixelRatio === 2 ? 2 : 1;
 		}
 	}
 };

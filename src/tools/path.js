@@ -47,19 +47,6 @@ export default {
 		} else {
 			this.moveLastBezierHandle(x, y);
 		}
-		//this.transformPointToBezier;
-		/*
-
-		var [x, y] = screenToCanvas(e.clientX, e.clientY, canvasModel);
-		this.object.attr({
-			x2: x,
-			y2: y
-		});
-
-		this.object.attr('imeProperties').selectionModel.update({
-			x2: x,
-			y2: y
-		}); */
 	},
 
 	createPath: function(x, y, canvasModel, controlModel){
@@ -77,8 +64,12 @@ export default {
 	},
 
 	addPoint: function(x, y, canvasModel, controlModel){
+		var {selectionModel} = this.object.attr('imeProperties');
+
 		if(this.isLastCurveLine()){
 			this.object.lineTo(x, y);
+
+			selectionModel.addPoint('line', x, y);
 		} else {
 			var [lh1x, lh1y, lh2x, lh2y, lx, ly] = this.getLastCurve().attr('args');
 			var [h1x, h1y] = mirrorPointByAnotherPoint([lh2x, lh2y], [lx, ly]);
@@ -87,10 +78,9 @@ export default {
 				x, y,
 				x, y
 			);
-		}
 
-		var {selectionModel} = this.object.attr('imeProperties');
-		selectionModel.addPoint(x, y);
+			selectionModel.addPoint('bezier', x, y, h1x, h1y);
+		}
 	},
 
 	transformLastLineToBezier: function(mouseX, mouseY){
@@ -136,7 +126,7 @@ function mirrorPointByAnotherPoint(point, pivot){
 	return [pivot[0] - dx, pivot[1] - dy];
 }
 
-/* t {screenToCanvas} from '../lib/coords.js';
+/* import {screenToCanvas} from '../lib/coords.js';
 import uid from '../lib/uid.js';
 import {bullet, mirrorBulletLine} from './controls.js';
 

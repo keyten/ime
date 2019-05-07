@@ -21,6 +21,10 @@ Object.assign(Rect.prototype, {
 		this.outline.attr(values);
 	},
 
+	rezoom: function(){
+		this.outline.rezoom();
+	},
+
 	remove: function(){
 		var {controlModel} = this;
 		var index = controlModel.controls.indexOf(this);

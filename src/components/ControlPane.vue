@@ -1,7 +1,11 @@
 <template>
 	<canvas
-		v-bind:width="width"
-		v-bind:height="height"
+		v-bind:width="width * dpi"
+		v-bind:height="height * dpi"
+		v-bind:style="{
+			width: width + 'px',
+			height: height + 'px'
+		}"
 		v-on:mousedown="$emit('mousedown', $event)"
 		v-on:mouseup="$emit('mouseup', $event)"
 		v-on:mousemove="$emit('mousemove', $event)"
@@ -16,6 +20,10 @@ export default {
 
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
+		this.model.ctx.attr({
+			scale: this.dpi,
+			pivot: 'lt'
+		});
 	},
 
 	computed: {
@@ -25,6 +33,10 @@ export default {
 
 		height: function(){
 			return window.innerHeight;
+		},
+
+		dpi: function(){
+			return window.devicePixelRatio === 2 ? 2 : 1;
 		}
 	},
 

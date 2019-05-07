@@ -75,11 +75,11 @@ export function rectWithBullets(attrs, canvasModel, controlModel){
 			x2 = bounds.x + x2 * zoom;
 			y2 = bounds.y + y2 * zoom;
 
+			drawRectOutline(ctx, x1, y1, x2 - x1, y2 - y1);
 			drawBullet(ctx, x1, y1);
 			drawBullet(ctx, x1, y2);
 			drawBullet(ctx, x2, y1);
 			drawBullet(ctx, x2, y2);
-			drawRectOutline(ctx, x1, y1, x2 - x1, y2 - y1);
 		},
 
 		attrs,

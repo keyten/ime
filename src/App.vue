@@ -147,4 +147,7 @@ html, body, *
 	border-collapse collapse
 	font-family "Helvetica Neue", Helvetica, Arial, sans-serif
 	font-size 13px
+
+html, body
+	background #eee
 </style>

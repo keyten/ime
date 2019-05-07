@@ -68,11 +68,17 @@ Object.assign(Path.prototype, {
 		controlModel.controls.push(this);
 	},
 
-	addPoint: function(x, y){
+	addPoint: function(type, x, y, h1x, h1y){
 		var {canvasModel, controlModel} = this;
 
 		this.outline.update();
-		this.handlers.push(bullet({x, y}, canvasModel, controlModel));
+		if(type === 'line'){
+			this.handlers.push(bullet({x, y}, canvasModel, controlModel));
+		} else {
+			this.handlers.push(lineWith2Bullets({
+				x, y, h1x, h1y, h2x: x, h2y: y
+			}, canvasModel, controlModel));
+		}
 	},
 
 	transformLastLineToBezier: function(h1x, h1y, h2x, h2y, x, y){
@@ -104,6 +110,11 @@ Object.assign(Path.prototype, {
 		this.outline = null;
 		this.handlers.forEach(handler => handler.destroy());
 		this.handlers = null;
+	},
+
+	rezoom: function(){
+		this.outline.rezoom();
+		this.handlers.forEach(handler => handler.rezoom());
 	}
 });
 
