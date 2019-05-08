@@ -1,15 +1,31 @@
 <template>
 	<div class="pane">
-		<canvas
-			v-bind:width="model.width * dpi"
-			v-bind:height="model.height * dpi"
+		<div
+			class="layers"
 			v-bind:style="{
 				width: styleWidth + 'px',
 				height: styleHeight + 'px',
 				transform: 'translate(' + offset[0] + 'px, ' + offset[1] + 'px)'
 			}"
-			ref="canvas"
-		></canvas>
+		>
+			<canvas
+				v-bind:width="model.width * dpi"
+				v-bind:height="model.height * dpi"
+				v-bind:style="{
+					width: styleWidth + 'px',
+					height: styleHeight + 'px',
+				}"
+				ref="canvas"
+			></canvas>
+			<canvas
+				v-bind:width="model.width * dpi"
+				v-bind:height="model.height * dpi"
+				v-bind:style="{
+					width: styleWidth + 'px',
+					height: styleHeight + 'px',
+				}"
+			></canvas>
+		</div>
 	</div>
 </template>
 
@@ -24,6 +40,12 @@ export default {
 			scale: this.dpi,
 			pivot: 'lt'
 		});
+
+		var oldRender = this.model.ctx.render;
+		this.model.ctx.render = function(ctx){
+			// тут нужно по canvas-ам
+			oldRender.call(this, ctx);
+		};
 	},
 
 	computed: {
@@ -52,8 +74,11 @@ export default {
 	justify-content center
 	align-items center
 
-canvas
+.layers
 	background white
+	box-shadow 0 0 3px rgba(0, 0, 0, 0.1)
+
+canvas
 	image-rendering pixelated
-	box-shadow 0 0 3px rgba(0, 0, 0, 0.1);
+	position absolute
 </style>

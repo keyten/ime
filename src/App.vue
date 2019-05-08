@@ -69,6 +69,7 @@
 			/>
 		</BasePanel> -->
 
+		<portal-target name="menu"></portal-target>
 		<portal-target name="window"></portal-target>
 	</div>
 </template>

@@ -4,7 +4,7 @@
 			<LayersPanelItem
 				v-for="elem in elements"
 				v-bind:element="elem"
-				v-bind:key="elem.uid"
+				v-bind:key="elem.attr('imeProperties').uid"
 				v-bind:canvasModel="canvasModel"
 			/>
 		</div>
@@ -61,11 +61,12 @@ export default {
 	cursor pointer
 	padding 10px 10px
 	display inline-block
-	background #fafafa
+	background linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5));
 	&:hover
-		background #eee
+		background linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.7));
 	&:active
-		background #ddd
+		background rgba(0, 0, 0, 0.3)
+		box-shadow inset 0 3px 3px rgba(0, 0, 0, 0.3)
 	&_disable
 		opacity 0.5
 		pointer-events none

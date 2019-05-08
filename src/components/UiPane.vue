@@ -24,6 +24,8 @@
 				v-bind:canvasModel="canvasPaneModel"
 			/>
 		</div> -->
+		<TopMenu class="top-menu" />
+
 		<div class="tools">
 			<ToolsPanel
 				v-bind:model="toolsModel"
@@ -34,7 +36,7 @@
 		<BasePanel
 			header="Layers"
 			v-bind:x="viewWidth - 210"
-			v-bind:y="10"
+			v-bind:y="45"
 		>
 			<LayersPanel
 				v-bind:canvasModel="canvasPaneModel"
@@ -55,6 +57,7 @@ import ToolsPanel from './ToolsPanel.vue';
 import ZoomPanel from './ZoomPanel.vue';
 import PropsPanel from './PropsPanel.vue';
 import ScriptPanel from './ScriptPanel.vue';
+import TopMenu from './TopMenu.vue';
 
 export default {
 	name: 'UiPane',
@@ -66,7 +69,9 @@ export default {
 		ToolsPanel,
 		ZoomPanel,
 		PropsPanel,
-		ScriptPanel
+		ScriptPanel,
+
+		TopMenu
 	},
 
 	data: () => ({
@@ -116,4 +121,10 @@ export default {
 	position absolute
 	top 30vh
 	left 0
+
+.top-menu
+	position absolute
+	top 0
+	left 0
+	width 100%
 </style>

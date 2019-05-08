@@ -20,6 +20,10 @@ export default {
 	down: false,
 
 	mousedown: function(e, canvasModel, controlModel){
+		if(canvasModel.activeElement !== this.object){
+			this.state = states.initial;
+		}
+
 		var [x, y] = screenToCanvas(e.clientX, e.clientY, canvasModel);
 
 		if(this.state === states.initial){
