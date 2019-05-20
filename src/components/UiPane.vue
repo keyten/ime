@@ -42,6 +42,16 @@
 				v-bind:canvasModel="canvasPaneModel"
 			/>
 		</BasePanel>
+
+		<BasePanel
+			header="Zoom"
+			v-bind:x="viewWidth - 210"
+			v-bind:y="150"
+		>
+			<ZoomPanel
+				v-bind:model="zoomOffsetModel"
+			/>
+		</BasePanel>
 	</div>
 </template>
 

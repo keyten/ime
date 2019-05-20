@@ -6,7 +6,7 @@ export default {
 	toolModel: null,
 
 	_tool: null,
-	get tool() {
+	get tool(){
 		return this._tool;
 	},
 

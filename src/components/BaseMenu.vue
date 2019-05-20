@@ -40,6 +40,7 @@ export default {
 		color #ddd
 	&:active
 		background #222
+		color #eee
 	&:first-child
 		border-top-left-radius 3px
 		border-top-right-radius 3px

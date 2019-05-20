@@ -10,6 +10,7 @@
 			v-bind:model="controlPaneModel"
 			v-bind:zoom="zoomOffsetModel.zoom"
 			v-bind:offset="zoomOffsetModel.offset"
+			v-bind:toolsModel="toolsModel"
 			v-on:mousedown="controlPaneMouseDown"
 		/>
 
@@ -109,7 +110,7 @@ export default {
 	}),
 
 	mounted: function(){
-		this.toolsModel.tool = 'path';
+		this.toolsModel.tool = 'brush';
 
 		window.addEventListener('mouseup', this.windowMouseUp);
 		window.addEventListener('mousemove', this.windowMouseMove);

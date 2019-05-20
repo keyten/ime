@@ -54,7 +54,7 @@ export default {
 	},
 
 	data: () => ({
-		tools: ['path', 'pointer', 'rect', 'hand'],
+		tools: ['pointer', 'brush', 'rect', 'path', 'hand'],
 		saveVisible: false
 	}),
 
@@ -79,17 +79,18 @@ export default {
 
 <style lang="stylus" scoped>
 .panelle
-	box-shadow 0 2px 2px rgba(0, 0, 0, 0.1)
+	box-shadow 0 2px 2px rgba(0, 0, 0, 0.1), 0 5px 5px -4px rgba(0, 0, 0, 0.4)
 	border-top-right-radius 5px
 	border-bottom-right-radius 5px
 	.tool-button
-		background linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5))
+		background #444
+		color #ccc
 		display block
 		width 46px
 		height 40px
 		cursor pointer
 		overflow hidden
-		border-top solid 1px #eee
+		border-top solid 1px #555
 		display flex
 		align-items center
 		padding-left 10px
@@ -99,14 +100,12 @@ export default {
 			border-top-right-radius 5px
 		&:last-child
 			border-bottom-right-radius 5px
+		&:hover
+			color #ddd
 		&.active, &:active
-			background #aaa
-			box-shadow inset 0 3px 3px rgba(0, 0, 0, 0.3), 0 1px white
-			border-color #777
-
-.tool-button.active + .tool-button,
-.tool-button:active + .tool-button
-	border-color #777
+			color #eee
+			background #222
+			box-shadow inset 0 5px 5px rgba(0, 0, 0, 0.7)
 
 .bg-color, .fg-color
 	width 30px

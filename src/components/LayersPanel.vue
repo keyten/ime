@@ -15,6 +15,12 @@
 			">
 				Remove
 			</div>
+			<div
+				v-on:click="createRaster"
+				v-bind:class="['button']
+			">
+				Add
+			</div>
 		</div>
 	</div>
 </template>
@@ -34,6 +40,10 @@ export default {
 		}
 	},
 	methods: {
+		createRaster: function(){
+			this.canvasModel.layersModel.createRaster();
+		},
+
 		remove: function(){
 			if(!this.canvasModel.activeElement){
 				return;
@@ -50,7 +60,7 @@ export default {
 .container
 	height 100%
 	display grid
-	grid-template-rows auto 34px
+	grid-template-rows auto 29px
 
 .items
 	overflow auto
@@ -59,7 +69,7 @@ export default {
 .button
 	font-size 12px
 	cursor pointer
-	padding 10px 10px
+	padding 7px 10px
 	display inline-block
 	background linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5));
 	&:hover

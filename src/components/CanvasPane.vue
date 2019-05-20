@@ -7,23 +7,45 @@
 				height: styleHeight + 'px',
 				transform: 'translate(' + offset[0] + 'px, ' + offset[1] + 'px)'
 			}"
+			ref="canvasContainer"
 		>
 			<canvas
-				v-bind:width="model.width * dpi"
-				v-bind:height="model.height * dpi"
+				v-if="model.layersModel.renderPrePostLayers"
+				v-bind:width="model.width * model.dpi"
+				v-bind:height="model.height * model.dpi"
+				v-bind:style="{
+					width: styleWidth + 'px',
+					height: styleHeight + 'px',
+				}"
+				v-for="layer in model.layersModel.preLayers"
+				v-bind:key="layer.uid"
+				class="pre-layer"
+				ref="preLayer"
+			></canvas>
+
+			<canvas
+				v-bind:width="model.width * model.dpi"
+				v-bind:height="model.height * model.dpi"
 				v-bind:style="{
 					width: styleWidth + 'px',
 					height: styleHeight + 'px',
 				}"
 				ref="canvas"
+				class="main-layer"
 			></canvas>
+
 			<canvas
-				v-bind:width="model.width * dpi"
-				v-bind:height="model.height * dpi"
+				v-if="model.layersModel.renderPrePostLayers"
+				v-bind:width="model.width * model.dpi"
+				v-bind:height="model.height * model.dpi"
 				v-bind:style="{
 					width: styleWidth + 'px',
 					height: styleHeight + 'px',
 				}"
+				v-for="layer in model.layersModel.postLayers"
+				v-bind:key="layer.uid"
+				class="post-layer"
+				ref="postLayer"
 			></canvas>
 		</div>
 	</div>
@@ -37,15 +59,9 @@ export default {
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
 		this.model.ctx.attr({
-			scale: this.dpi,
+			scale: this.model.dpi,
 			pivot: 'lt'
 		});
-
-		var oldRender = this.model.ctx.render;
-		this.model.ctx.render = function(ctx){
-			// тут нужно по canvas-ам
-			oldRender.call(this, ctx);
-		};
 	},
 
 	computed: {
@@ -55,10 +71,38 @@ export default {
 
 		styleHeight: function(){
 			return this.model.height * this.zoom;
+		}
+	},
+
+	watch: {
+		'model.layersModel.preLayers': function(value){
+			// на самом деле это костыль
+			// есть чуть более норм решение — сделать компонент <CanvasWithElements elements={currentLayer.elements} />
+			setTimeout(() => {
+				value.forEach((layer, i) => {
+					var canvas = this.$refs.preLayer[i];
+					var context = canvas.getContext('2d');
+					context.setTransform(this.model.dpi, 0, 0, this.model.dpi, 0, 0);
+
+					layer.elements.forEach(element => {
+						element.draw(context);
+					});
+				});
+			}, 1);
 		},
 
-		dpi: function(){
-			return window.devicePixelRatio === 2 ? 2 : 1;
+		'model.layersModel.postLayers': function(value){
+			setTimeout(() => {
+				value.forEach((layer, i) => {
+					var canvas = this.$refs.postLayer[i];
+					var context = canvas.getContext('2d');
+					context.setTransform(this.model.dpi, 0, 0, this.model.dpi, 0, 0);
+
+					layer.elements.forEach(element => {
+						element.draw(context);
+					});
+				});
+			}, 1);
 		}
 	}
 };

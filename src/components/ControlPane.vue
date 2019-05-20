@@ -1,10 +1,11 @@
 <template>
 	<canvas
-		v-bind:width="width * dpi"
-		v-bind:height="height * dpi"
+		v-bind:width="width * model.dpi"
+		v-bind:height="height * model.dpi"
 		v-bind:style="{
 			width: width + 'px',
-			height: height + 'px'
+			height: height + 'px',
+			cursor: cursor
 		}"
 		v-on:mousedown="$emit('mousedown', $event)"
 		v-on:mouseup="$emit('mouseup', $event)"
@@ -16,12 +17,12 @@
 <script>
 export default {
 	name: 'ControlPane',
-	props: ['model', 'zoom', 'offset'],
+	props: ['model', 'zoom', 'offset', 'toolsModel'],
 
 	mounted: function(){
 		this.model.ctx = Delta.query(this.$refs.canvas);
 		this.model.ctx.attr({
-			scale: this.dpi,
+			scale: this.model.dpi,
 			pivot: 'lt'
 		});
 	},
@@ -35,8 +36,8 @@ export default {
 			return window.innerHeight;
 		},
 
-		dpi: function(){
-			return window.devicePixelRatio === 2 ? 2 : 1;
+		cursor: function(){
+			return this.toolsModel.toolModel && this.toolsModel.toolModel.cursor;
 		}
 	},
 
