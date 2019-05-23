@@ -1,6 +1,7 @@
 <template>
 	<div class="container">
 		<BaseRange
+			title="Zoom"
 			v-bind:min="0.5"
 			v-bind:max="10"
 			v-bind:step="0.01"

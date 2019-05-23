@@ -47,5 +47,12 @@ export default {
 			x2: x,
 			y2: y
 		});
+	},
+
+	type: 'vector',
+	change: function(options){
+		if(options.type){
+			this.type = options.type;
+		}
 	}
 };

@@ -1,26 +1,5 @@
 <template>
 	<div class="container">
-		<!-- <div class="inside">
-			<div
-				class="tool-button"
-				v-for="tool in tools"
-				v-bind:key="tool"
-				v-bind:class="{active: model.tool === tool}"
-				v-on:click="toolChange(tool)"
-			>
-				{{tool}}
-			</div>
-		</div>
-
-		<!-- For save dialog -->
-		<!-- <div class="right-buttons">
-			<div class="save-btn" v-on:click="saveVisible = true">Save</div>
-			<ExportWindow
-				v-bind:visible="saveVisible"
-				v-bind:model="canvasModel"
-				v-on:close="saveVisible = false"
-			/>
-		</div> -->
 		<div class="panelle">
 			<div
 				class="tool-button"
@@ -43,15 +22,10 @@
 </template>
 
 <script>
-import ExportWindow from './ExportWindow.vue';
 
 export default {
 	name: 'ToolsPanel',
 	props: ['model', 'canvasModel'],
-
-	components: {
-		ExportWindow
-	},
 
 	data: () => ({
 		tools: ['pointer', 'brush', 'rect', 'path', 'hand'],
@@ -138,28 +112,4 @@ export default {
 .default-colors
 	margin-top 20px
 	border-bottom-left-radius 8px
-
-/*  .container
-	display grid
-	grid-template-columns auto auto
-
-.right-buttons
-	text-align right
-
-.tool-button
-	padding 12px 20px
-	padding-bottom 13px
-	cursor pointer
-	display inline-block
-	&.active
-		background #eee
-
-.save-btn
-	padding 12px 20px
-	padding-bottom 13px
-	cursor pointer
-	display inline-block
-	&:hover
-		background #eee
-	border-bottom-right-radius 8px */
 </style>

@@ -27,6 +27,7 @@
 
 <script>
 import BaseMenu from './BaseMenu.vue';
+import uiModel from '../models/Ui.js';
 
 export default {
 	name: 'TopMenu',
@@ -44,6 +45,11 @@ export default {
 				items: [{
 					text: 'Open',
 					callback: function(){}
+				}, {
+					text: 'Export to js',
+					callback: function(){
+						uiModel.exportWindowVisible = true;
+					}
 				}, {
 					text: 'Close',
 					callback: function(){}

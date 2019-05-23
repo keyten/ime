@@ -1,9 +1,16 @@
 <template>
 	<div class="range" ref="range">
+		<div class="title">
+			{{title}}
+			<input
+				type="text"
+				v-bind:value="value"
+			/>
+		</div>
 		<div class="slider">
 			<div
 				v-bind:style="{
-					marginLeft: (105 * percent - 5) + 'px'
+					marginLeft: (160 * percent - 5) + 'px'
 				}"
 				class="draggable"
 				ref="draggable"
@@ -11,17 +18,13 @@
 			></div>
 			<div class="line"></div>
 		</div>
-		<input
-			type="text"
-			v-bind:value="value"
-		/>
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'BaseRangeInput',
-	props: ['min', 'max', 'step', 'value'],
+	props: ['min', 'max', 'step', 'value', 'title'],
 
 	computed: {
 		percent: function(){
@@ -34,7 +37,7 @@ export default {
 			const left = this.$refs.range.getBoundingClientRect().left;
 
 			const mousemove = (e) => {
-				var t = (e.clientX - left) / 105;
+				var t = (e.clientX - left) / 160;
 				t = Math.max(Math.min(t, 1), 0);
 				var val = this.min + t * (this.max - this.min);
 				val = val - val % this.step;
@@ -55,6 +58,41 @@ export default {
 
 <style scoped lang="stylus">
 .range
+	min-width 150px
+
+.line
+	display block
+	width 100%
+	height 10px
+	background #555
+	margin-top 9px
+	border-radius 5px
+
+.draggable
+	position absolute
+	width 10px
+	height 10px
+	border-radius 100%
+	background #ccc
+	margin-top -2px
+	cursor pointer
+	border solid 2px #444
+	&:hover
+		background #ddd
+	&:active
+		background #eee
+
+.title
+	font-weight 500
+
+input
+	width 25px
+	height 16px
+	float right
+	border 0
+	background 0
+	outline 0
+/* .range
 	display inline-grid
 	grid-template-columns auto 30px
 	min-width 150px
@@ -107,5 +145,5 @@ input
 	border-top-right-radius 4px
 	border-bottom-right-radius 4px
 	&:focus
-		border-color #aaa
+		border-color #aaa */
 </style>

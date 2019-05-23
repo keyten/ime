@@ -26,7 +26,8 @@ export default {
 		if(oldElement && oldElement.attr('imeProperties').selectionModel){
 			oldElement.attr('imeProperties').selectionModel.remove();
 		}
-		if(isRaster(oldElement)){
+
+		if(isRaster(oldElement) && this.layersModel.mode === 'raster'){
 			this.layersModel.compileRaster(oldElement);
 			this.layersModel.toVectorMode();
 		}

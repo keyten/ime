@@ -156,13 +156,10 @@ export default {
 
 function Layer(options){
 	this.uid = uid();
-	Object.assign(this, options);
+	this.elements = options.elements;
+	this.composite = options.composite;
 }
 
 function isRaster(element){
 	return element instanceof Delta.Image;
 }
-/*
-function renderMultipleMode(){
-	;
-} */

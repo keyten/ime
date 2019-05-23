@@ -78,7 +78,7 @@ export default {
 		'model.layersModel.preLayers': function(value){
 			// на самом деле это костыль
 			// есть чуть более норм решение — сделать компонент <CanvasWithElements elements={currentLayer.elements} />
-			setTimeout(() => {
+			requestAnimationFrame(() => {
 				value.forEach((layer, i) => {
 					var canvas = this.$refs.preLayer[i];
 					var context = canvas.getContext('2d');
@@ -88,11 +88,11 @@ export default {
 						element.draw(context);
 					});
 				});
-			}, 1);
+			});
 		},
 
 		'model.layersModel.postLayers': function(value){
-			setTimeout(() => {
+			requestAnimationFrame(() => {
 				value.forEach((layer, i) => {
 					var canvas = this.$refs.postLayer[i];
 					var context = canvas.getContext('2d');
@@ -102,7 +102,7 @@ export default {
 						element.draw(context);
 					});
 				});
-			}, 1);
+			});
 		}
 	}
 };

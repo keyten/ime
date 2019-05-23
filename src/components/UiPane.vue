@@ -33,10 +33,15 @@
 			/>
 		</div>
 
+		<ToolPropPanel
+			class="tool-prop-panel"
+			v-bind:toolsModel="toolsModel"
+		/>
+
 		<BasePanel
 			header="Layers"
 			v-bind:x="viewWidth - 210"
-			v-bind:y="45"
+			v-bind:y="95"
 		>
 			<LayersPanel
 				v-bind:canvasModel="canvasPaneModel"
@@ -46,12 +51,18 @@
 		<BasePanel
 			header="Zoom"
 			v-bind:x="viewWidth - 210"
-			v-bind:y="150"
+			v-bind:y="viewHeight - 106"
 		>
 			<ZoomPanel
 				v-bind:model="zoomOffsetModel"
 			/>
 		</BasePanel>
+
+		<ExportWindow
+			v-bind:visible="uiModel.exportWindowVisible"
+			v-bind:model="canvasPaneModel"
+			v-on:close="uiModel.exportWindowVisible = false"
+		/>
 	</div>
 </template>
 
@@ -60,14 +71,18 @@ import canvasPaneModel from '../models/CanvasPane.js';
 import controlPaneModel from '../models/ControlPane.js';
 import toolsModel from '../models/Tools.js';
 import zoomOffsetModel from '../models/ZoomOffset.js';
+import uiModel from '../models/Ui.js';
 
 import BasePanel from './BasePanel.vue';
 import LayersPanel from './LayersPanel.vue';
 import ToolsPanel from './ToolsPanel.vue';
+import ToolPropPanel from './ToolPropPanel.vue';
 import ZoomPanel from './ZoomPanel.vue';
 import PropsPanel from './PropsPanel.vue';
 import ScriptPanel from './ScriptPanel.vue';
 import TopMenu from './TopMenu.vue';
+
+import ExportWindow from './ExportWindow.vue';
 
 export default {
 	name: 'UiPane',
@@ -80,15 +95,19 @@ export default {
 		ZoomPanel,
 		PropsPanel,
 		ScriptPanel,
+		ToolPropPanel,
 
-		TopMenu
+		TopMenu,
+
+		ExportWindow
 	},
 
 	data: () => ({
 		canvasPaneModel,
 		controlPaneModel,
 		toolsModel,
-		zoomOffsetModel
+		zoomOffsetModel,
+		uiModel
 	}),
 
 	computed: {
@@ -137,4 +156,9 @@ export default {
 	top 0
 	left 0
 	width 100%
+
+.tool-prop-panel
+	position absolute
+	top 35px
+	left 0
 </style>

@@ -39,5 +39,10 @@ export default {
 		if(this.toolModel.keydown){
 			this.toolModel.keydown(e, canvasPaneModel, controlPaneModel);
 		}
+	},
+	change: function(options){
+		if(this.toolModel.change){
+			this.toolModel.change(options);
+		}
 	}
 };
